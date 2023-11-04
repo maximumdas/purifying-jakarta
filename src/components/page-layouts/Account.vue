@@ -175,14 +175,7 @@
               <!--end::Price-->
             </div>
             <!--end::Package-->
-
-            <a
-              href="#"
-              class="text-link fs-7 fw-bolder"
-              data-bs-toggle="modal"
-              data-bs-target="#kt_modal_upgrade_plan"
-              >Upgrade to Pro</a
-            >
+            
           </div>
           <!--end::Account info-->
         </div>

@@ -15,16 +15,12 @@
     <div class="aside-logo flex-column-auto pt-9 pb-7 px-9" id="kt_aside_logo">
       <!--begin::Logo-->
       <a href="#">
-        <img
+        <h2 class="fw-bolder">PURIFYING <br/> JAKARTA</h2>
+        <!-- <img
           alt="Logo"
           src="media/logos/logo-default.svg"
           class="max-h-50px logo-default"
-        />
-        <img
-          alt="Logo"
-          src="media/logos/logo-compact.svg"
-          class="max-h-50px logo-minimize"
-        />
+        /> -->
       </a>
       <!--end::Logo-->
     </div>
@@ -36,16 +32,6 @@
     </div>
     <!--end::Aside menu-->
 
-    <!--begin::Footer-->
-    <div class="aside-footer flex-column-auto px-6 pb-5" id="kt_aside_footer">
-      <a
-        href="https://keenthemes.com/products/rider-vue-pro"
-        class="btn btn-light-primary w-100"
-      >
-        Upgrade To Pro
-      </a>
-    </div>
-    <!--end::Footer-->
   </div>
   <!--end::Aside-->
 </template>
