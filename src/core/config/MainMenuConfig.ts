@@ -7,6 +7,21 @@ const DocMenuConfig = [
         svgIcon: "media/icons/duotune/general/gen025.svg",
       },
       {
+        sectionTitle: "Analytics",
+        route: "/pages",
+        svgIcon: "media/icons/duotune/maps/map002.svg",
+        sub: [
+          {
+            heading: "Purify Jakarta",
+            route: "/pages/about-us",
+          },
+          {
+            heading: "Dataset",
+            route: "/pages/invoice",
+          },
+        ],
+      },
+      {
         sectionTitle: "pages",
         route: "/pages",
         svgIcon: "media/icons/duotune/ecommerce/ecm007.svg",
