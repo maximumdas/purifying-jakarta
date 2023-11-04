@@ -2,8 +2,14 @@
   <!--begin::Row-->
   <div class="row g-xl-8">
     <!--begin:::Col-->
+    <div class="col-12">
+      <Map widget-classes="mb-5 mb-xl-8"></Map>
+    </div>
+    <!--end:::Col-->
+
+    <!--begin:::Col-->
     <div class="col-xxl-5">
-      <KTListWidget3 widget-classes="mb-5 mb-xl-8"></KTListWidget3>
+      <!-- <KTListWidget3 widget-classes="mb-5 mb-xl-8"></KTListWidget3> -->
 
       <KTSliderWidget1 widget-classes="mb-5 mb-xl-8"></KTSliderWidget1>
 
@@ -90,7 +96,10 @@ import KTChartWidget2 from "@/components/widgets/charts/Widget2.vue";
 import KTEngageWidget1 from "@/components/widgets/engage/Widget1.vue";
 import KTListWidget1 from "@/components/widgets/lists/Widget1.vue";
 import KTListWidget2 from "@/components/widgets/lists/Widget2.vue";
-import KTListWidget3 from "@/components/widgets/lists/Widget3.vue";
+
+// import KTListWidget3 from "@/components/widgets/lists/Widget3.vue";
+import Map from "@/components/widgets/map/Map.vue";
+
 import KTListWidget4 from "@/components/widgets/lists/Widget4.vue";
 import KTSliderWidget1 from "@/components/widgets/sliders/Widget1.vue";
 import KTTablesWidget1 from "@/components/widgets/tables/Widget1.vue";
@@ -103,7 +112,8 @@ export default defineComponent({
     KTEngageWidget1,
     KTListWidget1,
     KTListWidget2,
-    KTListWidget3,
+    // KTListWidget3,
+    Map,
     KTListWidget4,
     KTSliderWidget1,
     KTTablesWidget1,
