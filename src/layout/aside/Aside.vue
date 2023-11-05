@@ -15,12 +15,15 @@
     <div class="aside-logo flex-column-auto pt-9 pb-7 px-9" id="kt_aside_logo">
       <!--begin::Logo-->
       <a href="#">
-        <h2 class="fw-bolder">PURIFYING <br/> JAKARTA</h2>
-        <!-- <img
+        <!-- <h2 class="fw-bolder">
+          PURIFYING <br />
+          JAKARTA
+        </h2> -->
+        <img
           alt="Logo"
-          src="media/logos/logo-default.svg"
-          class="max-h-50px logo-default"
-        /> -->
+          src="media/logos/un-datathon.png"
+          style="max-height: 80px"
+        />
       </a>
       <!--end::Logo-->
     </div>
@@ -31,7 +34,6 @@
       <KTMenu></KTMenu>
     </div>
     <!--end::Aside menu-->
-
   </div>
   <!--end::Aside-->
 </template>
