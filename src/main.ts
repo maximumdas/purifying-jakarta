@@ -29,5 +29,7 @@ initInlineSvg(app);
 initVeeValidate();
 
 app.use(i18n);
+app.config.globalProperties.openAqApi = "https://api.openaq.org/v2/";
+app.provide("openAqApi", "https://api.openaq.org/v2/");
 
 app.mount("#app");
