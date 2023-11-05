@@ -6,7 +6,7 @@
   >
     <!--begin::Header-->
     <div class="px-7 py-5">
-      <div class="fs-5 text-dark fw-bolder">Filter Options</div>
+      <div class="fs-5 text-dark fw-bolder">Filter Layer</div>
     </div>
     <!--end::Header-->
 

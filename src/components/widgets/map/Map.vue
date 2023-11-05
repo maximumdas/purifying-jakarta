@@ -425,10 +425,6 @@ export default defineComponent({
       },
     };
 
-    onMounted(() => {
-      console.log(hexPolygon);
-    });
-
     const series = [
       {
         name: "Net Profit",
