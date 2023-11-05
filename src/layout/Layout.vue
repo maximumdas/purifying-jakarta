@@ -12,7 +12,7 @@
     <!-- end:: Aside Left -->
 
     <div id="kt_wrapper" class="wrapper d-flex flex-column flex-row-fluid">
-      <KTHeader></KTHeader>
+      <KTHeader v-if="!route.path.includes('/simulation')"></KTHeader>
 
       <!-- begin:: Content -->
       <div
@@ -130,6 +130,7 @@ export default defineComponent({
       isDocPage,
       themeDefaultLogo,
       themeCompactLogo,
+      route,
     };
   },
 });

@@ -12,8 +12,8 @@ const DocMenuConfig = [
         svgIcon: "media/icons/duotune/maps/map002.svg",
         sub: [
           {
-            heading: "Purify Jakarta",
-            route: "/pages/about-us",
+            heading: "Simulation",
+            route: "/pages/simulation",
           },
           {
             heading: "Dataset",
