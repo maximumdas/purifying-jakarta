@@ -112,16 +112,17 @@
           class="tab-pane fade active show"
           id="kt_lists_widget_3_tab_pane_1"
         >
-          <div style="height: 600px; width: 800px">
+          <div style="height: 600px; width: 100%">
             <l-map
               ref="map"
               v-model:zoom="zoom"
               :center="[-6.3810549, 106.8661672]"
             >
               <l-tile-layer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url="https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWF4aW11bWRhcyIsImEiOiJjbGE3ejA0cmcwNDhtM3BteTZ1ZDR1NW1pIn0.X360ooFjxu2JyzZVjohMgg"
                 layer-type="base"
-                name="OpenStreetMap"
+                name="Mapbox"
+                attribution="© <a href='https://www.mapbox.com/contribute/'>Mapbox</a>"
               ></l-tile-layer>
               <l-geo-json :geojson="hexPolygon"> </l-geo-json>
             </l-map>
