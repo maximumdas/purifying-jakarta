@@ -8,25 +8,6 @@
       <!--end::Card title-->
 
       <!--begin::Card toolbar-->
-      <div class="card-toolbar">
-        <div class="d-flex align-items-center">
-          <a
-            class="
-              btn btn-sm btn-icon btn-circle btn-icon-info btn-active-light-info
-            "
-            href="#"
-            data-kt-menu-trigger="click"
-            data-kt-menu-placement="bottom-end"
-            data-kt-menu-flip="top-end"
-          >
-            <span class="svg-icon svg-icon-1">
-              <inline-svg src="media/icons/duotune/general/gen023.svg" />
-            </span>
-          </a>
-          <Dropdown1></Dropdown1>
-        </div>
-      </div>
-      <!--end::Card toolbar-->
     </div>
     <!--end::Card header-->
 
@@ -60,7 +41,7 @@
             data-bs-toggle="tab"
             href="#kt_lists_widget_3_tab_pane_1"
           >
-            Exclusive Authors
+            AQI Sensor Stations
           </a>
         </li>
         <!--end::Tab nav-->
@@ -79,7 +60,7 @@
             data-bs-toggle="tab"
             href="#kt_lists_widget_3_tab_pane_2"
           >
-            Statistics
+            AQI Trends
           </a>
         </li>
         <!--end::Tab nav-->
@@ -98,7 +79,7 @@
             data-bs-toggle="tab"
             href="#kt_lists_widget_3_tab_pane_3"
           >
-            Recent Trends
+            Current AQI
           </a>
         </li>
         <!--end::Tab nav-->
@@ -146,6 +127,13 @@ import { ref, inject, computed, onMounted } from "vue";
 import leaflet from "leaflet";
 import hexPolygon from "@/assets/map/hex_res7_with_attr.js";
 import { array } from "yup";
+
+const listIdStstions = [
+  8637, 222854, 66145, 354662, 337479, 1708264, 1628560, 1563313, 1776543, 8320,
+  1757030, 299574, 299575, 342846, 160412, 275162, 224433, 2537, 2538,
+];
+
+// 324734959ff84b4ae4efe58448de608b743cc98b
 
 const openAqApi = inject("openAqApi");
 
@@ -207,7 +195,7 @@ async function getMap() {
       this.setStyle({
         weight: 5,
         fillColor: "#FD8D3C",
-        dashArray: "",
+        dashArray: "3",
         fillOpacity: 0.7,
       });
       this.bringToFront();
@@ -228,8 +216,7 @@ async function getMap() {
     onEachFeature: mapInteractions,
     style: style,
   });
-  multipolygon.addTo(map);
-
+  //   multipolygon.addTo(map);
   var layerControl = leaflet.control.layers().addTo(map);
   map.fitBounds(multipolygon.getBounds());
 
@@ -247,21 +234,24 @@ async function getMap() {
       console.log(response.data.results);
       var list_stations = [];
       stations.forEach((element) => {
-        var myIcon = leaflet.icon({
-          iconUrl: "media/icons/destination.png",
-          iconSize: [40, 40],
-        });
-        const markerStat = leaflet
-          .marker(
-            [element.coordinates.latitude, element.coordinates.longitude],
-            { icon: myIcon }
-          )
-          .bindPopup("Station Name: " + element.name);
-        list_stations.push(markerStat);
+        if (listIdStstions.includes(element.id)) {
+          var myIcon = leaflet.icon({
+            iconUrl: "media/icons/destination.png",
+            iconSize: [40, 40],
+          });
+          const markerStat = leaflet
+            .marker(
+              [element.coordinates.latitude, element.coordinates.longitude],
+              { icon: myIcon }
+            )
+            .bindPopup("Station Name: " + element.name);
+          list_stations.push(markerStat);
 
-        markerStat.addTo(map);
+          markerStat.addTo(map);
+        }
       });
       const stationLayer = leaflet.layerGroup(list_stations);
+      stationLayer.addTo(map);
       layerControl.addOverlay(stationLayer, "AQI Sensors");
       layerControl.addOverlay(multipolygon, "H3");
     });
