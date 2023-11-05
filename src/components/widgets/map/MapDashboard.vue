@@ -100,7 +100,7 @@
         <!--begin::Tab pane-->
         <div class="tab-pane fade" id="kt_lists_widget_3_tab_pane_2">
           <!--begin::Chart-->
-
+          <div id="chart-trend"></div>
           <!--end::Chart-->
         </div>
         <!--end::Tab pane-->
@@ -127,13 +127,14 @@ import { ref, inject, computed, onMounted } from "vue";
 import leaflet from "leaflet";
 import hexPolygon from "@/assets/map/hex_res7_with_attr.js";
 import { array } from "yup";
+import ApexCharts from "apexcharts";
 
 const listIdStstions = [
   8637, 222854, 66145, 354662, 337479, 1708264, 1628560, 1563313, 1776543, 8320,
   1757030, 299574, 299575, 342846, 160412, 275162, 224433, 2537, 2538,
 ];
 
-// 324734959ff84b4ae4efe58448de608b743cc98b
+// 324734959ff84b4ae4efe58448de608b743cc98b token
 
 const openAqApi = inject("openAqApi");
 
@@ -216,9 +217,8 @@ async function getMap() {
     onEachFeature: mapInteractions,
     style: style,
   });
-  //   multipolygon.addTo(map);
+  multipolygon.addTo(map);
   var layerControl = leaflet.control.layers().addTo(map);
-  map.fitBounds(multipolygon.getBounds());
 
   await axios
     .get(
@@ -253,11 +253,35 @@ async function getMap() {
       const stationLayer = leaflet.layerGroup(list_stations);
       stationLayer.addTo(map);
       layerControl.addOverlay(stationLayer, "AQI Sensors");
-      layerControl.addOverlay(multipolygon, "H3");
+      layerControl.addOverlay(multipolygon, "H3 Hexagon Grid");
     });
+
+  map.fitBounds(multipolygon.getBounds());
+}
+
+function makeChart() {
+  var options = {
+    chart: {
+      type: "line",
+    },
+    series: [
+      {
+        name: "sales",
+        data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+      },
+    ],
+    xaxis: {
+      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+    },
+  };
+
+  var chart = new ApexCharts(document.querySelector("#chart-trend"), options);
+
+  chart.render();
 }
 
 onMounted(() => {
   getMap();
+  makeChart();
 });
 </script>
