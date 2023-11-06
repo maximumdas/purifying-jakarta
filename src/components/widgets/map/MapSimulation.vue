@@ -4,7 +4,7 @@
     <!--begin::Card header-->
     <div class="card-header">
       <!--begin::Card title-->
-      <h3 class="card-title fw-boldest">Changes Effect</h3>
+      <h3 class="card-title fw-boldest">{{ title }}</h3>
       <!--end::Card title-->
 
       <!--begin::Card toolbar-->
@@ -23,17 +23,21 @@
               <inline-svg src="media/icons/duotune/general/gen023.svg" />
             </span>
           </a>
-          <Dropdown1></Dropdown1>
+          <DropdownSimulation :onSelectChange="changeSelected(val)" />
         </div>
       </div>
       <!--end::Card toolbar-->
     </div>
+
     <!--end::Card header-->
 
     <!--begin::Body-->
     <div class="card-body pt-1">
       <!--begin:Tab content-->
       <div class="tab-content">
+        <div class="row">
+          <div class="col-12">Displayed Var: {{ selectedVar }}</div>
+        </div>
         <!--begin::Tab pane-->
         <div
           class="tab-pane fade active show"
@@ -51,7 +55,14 @@
                 name="Mapbox"
                 attribution="© <a href='https://www.mapbox.com/contribute/'>Mapbox</a>"
               ></l-tile-layer>
-              <l-geo-json :geojson="hexPolygon"> </l-geo-json>
+              <l-geo-json
+                :geojson="polygonData"
+                :optionsStyle="style"
+                :options="{
+                  onEachFeature: onEachHexFeature,
+                }"
+              >
+              </l-geo-json>
             </l-map>
           </div>
         </div>
@@ -66,27 +77,116 @@
 
 <script lang="ts">
 import "leaflet/dist/leaflet.css";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, toRefs } from "vue";
 import { getCSSVariableValue } from "@/assets/ts/_utils";
-import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
+import DropdownSimulation from "@/components/dropdown/DropdownSimulation.vue";
 import { LMap, LTileLayer, LGeoJson } from "@vue-leaflet/vue-leaflet";
-import hexPolygon from "@/assets/map/hex_res7_with_attr.js";
 
 export default defineComponent({
   name: "kt-widget-3",
   props: {
     widgetClasses: String,
+    polygonData: Object,
+    title: String,
   },
   components: {
-    Dropdown1,
+    DropdownSimulation,
     LMap,
     LTileLayer,
     LGeoJson,
   },
-  setup() {
-    const zoom = ref<number>(10);
+  setup(props) {
+    const zoom = ref<number>(9);
     const map = ref(null);
+    const selectedVar = ref("AQI");
 
+    const onEachHexFeature = (feature, layer) => {
+      layer.bindPopup(`<table>
+        <tbody>
+          </tbody>
+        <tr>
+          <td>Hex Id </td>
+          <td>:</td>
+          <td>
+            ${feature.properties.hex_id}
+          </td>
+        </tr>
+
+        <tr>
+          <td>Province</td>
+          <td>:</td>
+          <td>
+            [${feature.properties.kdprov}] ${feature.properties.nmprov}
+            </td>
+        </tr>
+        <tr>
+          <td>City</td>
+          <td>:</td>
+          <td>
+            [${feature.properties.kdkab}] ${feature.properties.nmkab}
+            </td>
+        </tr>
+        <tr>
+          <td>AQI Value</td>
+          <td>:</td>
+          <td>
+            ${feature.properties.aqi}
+            </td>
+        </tr>
+        </table>`);
+      layer.on("mouseover", () => {
+        layer.setStyle({
+          weight: 5,
+          fillColor: "#FD8D3C",
+          dashArray: "3",
+          fillOpacity: 0.7,
+        });
+        layer.bringToFront();
+      });
+      layer.on("mouseout", function () {
+        layer.setStyle({
+          // fillColor: "#009EFF",
+          fillColor: getColorGrade(feature.properties.aqi),
+          weight: 2,
+          opacity: 1,
+          dashArray: "3",
+          fillOpacity: 0.7,
+        });
+      });
+    };
+
+    const getColorGrade = (value) => {
+      let color = "#7E0122";
+      if (value <= 50) {
+        color = "#04E300";
+      } else if (value <= 100) {
+        color = "#FFFF00";
+      } else if (value <= 150) {
+        color = "#FF7E00";
+      } else if (value <= 200) {
+        color = "#FF0000";
+      } else if (value <= 300) {
+        color = "#8F3F97";
+      }
+
+      return color;
+    };
+
+    const style = (feature) => {
+      return {
+        // fillColor: "#009EFF",
+        fillColor: getColorGrade(feature.properties.aqi),
+        weight: 2,
+        opacity: 1,
+        color: "white",
+        dashArray: "3",
+        fillOpacity: 0.7,
+      };
+    };
+
+    const changeSelected = (val) => {
+      console.log(val);
+    };
     const series = [
       {
         name: "Net Profit",
@@ -97,12 +197,14 @@ export default defineComponent({
         data: [-30, -40, -55, -60, -40, -20],
       },
     ];
-
     return {
       series,
       zoom,
       map,
-      hexPolygon,
+      selectedVar,
+      style,
+      onEachHexFeature,
+      changeSelected,
     };
   },
 });

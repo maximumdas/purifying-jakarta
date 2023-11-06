@@ -6,44 +6,69 @@
           <div class="row">
             <div class="col-6">
               <div class="my-1">
-                <label for="aqi_pref">Set aqi preference: </label>
-                <input
-                  style="border-radius: 2px"
-                  ref="inputRef"
-                  type="text"
-                  class="form-control"
-                  name="aqi_pref"
-                  id="aqi_pref"
-                  placeholder="Search..."
-                />
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="my-1">
                 <label for="aqi_pref">Filters: </label>
-                <multiselect
+
+                <el-select
+                  class="form-select-solid d-block"
+                  placeholder="Select region"
+                  v-model="xSelected"
+                >
+                  <el-option value="3175" label="Jakarta Utara"
+                    >Jakarta Utara</el-option
+                  >
+                  <el-option value="3174" label="Jakarta Barat"
+                    >Jakarta Barat</el-option
+                  >
+                  <el-option value="3173" label="Jakarta Pusat"
+                    >Jakarta Pusat</el-option
+                  >
+                  <el-option value="3172" label="Jakarta Timur"
+                    >Jakarta Timur</el-option
+                  >
+                  <el-option value="3171" label="Jakarta Selatan"
+                    >Jakarta Selatan</el-option
+                  >
+                </el-select>
+                <!-- <multiselect
                   v-model="xSelected"
                   :options="xOptions"
                   mode="tags"
                   placeholder="Select dependent variabel"
+                /> -->
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="my-1">
+                <label for="aqi_pref">Set aqi preference: </label>
+                <el-input
+                  style="border-radius: 2px"
+                  ref="inputRef"
+                  type="number"
+                  name="aqi_pref"
+                  id="aqi_pref"
+                  placeholder="Input pefered AQI"
                 />
               </div>
+            </div>
+            <div class="col-12 text-end">
+              <el-button class="mt-5" type="warning">Reset</el-button>
+              <el-button class="mt-5" type="primary">Simulate</el-button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <MapSimulation />
-    <!-- <div style="height: 75vh; width: 100%" class="rounded col-12">
-      <l-map ref="map" v-model:zoom="zoom" :center="[-6.3810549, 106.8661672]">
-        <l-tile-layer
-          url="https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWF4aW11bWRhcyIsImEiOiJjbGE3ejA0cmcwNDhtM3BteTZ1ZDR1NW1pIn0.X360ooFjxu2JyzZVjohMgg"
-          layer-type="base"
-          name="Mapbox"
-          attribution="© <a href='https://www.mapbox.com/contribute/'>Mapbox</a>"
-        ></l-tile-layer>
-      </l-map>
-    </div> -->
+    <div class="row">
+      <div class="col-6">
+        <MapSimulation :polygonData="polygonData" title="Current Situation" />
+      </div>
+      <div class="col-6">
+        <MapSimulation
+          :polygonData="targetPolygonData"
+          title="Changes Effect"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,34 +79,22 @@ import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 import Multiselect from "@vueform/multiselect";
 import MapSimulation from "@/components/widgets/map/MapSimulation.vue";
+import hexPolygon from "@/assets/map/hex_before_attribute.js";
 
 export default defineComponent({
   name: "simulation",
   components: {
     // LMap,
     // LTileLayer,
-    Multiselect,
+    // Multiselect,
     MapSimulation,
   },
   setup() {
     const zoom = ref(9);
     const xSelected = ref(null);
-    const xOptions = ref([
-      { label: "Average built-up area", value: "built_up_mean" },
-      { label: "Average population", value: "pop_mean" },
-      { label: "Land survace temperature", value: "LST_mean" },
-      { label: "Normalize difference built-up index", value: "NDBI_mean" },
-      { label: "Normalize difference vegetation index", value: "NDVI_mean" },
-      { label: "Is built-up majority", value: "land_cover_Built_up" },
-      { label: "Is cropland majority", value: "land_cover_Crop_land" },
-      { label: "Is grassland majority", value: "land_cover_Grassland" },
-      { label: "Is swamp majority", value: "land_cover_Herbaceous_wetland" },
-      {
-        label: "Is water body majority",
-        value: "land_cover_Permanent_Water_Bodies",
-      },
-      { label: "Is trees majority", value: "land_cover_Tree_Cover" },
-    ]);
+    const polygonData = ref(hexPolygon);
+    const targetPolygonData = ref(null);
+    const xOptions = ref();
     onMounted(() => {
       setCurrentPageBreadcrumbs("Simulation", ["Pages", "Simulation"]);
     });
@@ -90,6 +103,8 @@ export default defineComponent({
       zoom,
       xOptions,
       xSelected,
+      polygonData,
+      targetPolygonData,
     };
   },
 });

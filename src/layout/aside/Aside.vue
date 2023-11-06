@@ -21,7 +21,7 @@
         </h2> -->
         <img
           alt="Logo"
-          src="media/logos/un-datathon.png"
+          src="media/logos/jakarta-purifier.png"
           style="max-height: 80px"
         />
       </a>
