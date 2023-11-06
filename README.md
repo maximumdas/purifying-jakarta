@@ -30,6 +30,7 @@ An air quality index (AQI) is an indicator developed by government agencies to c
 ## Data Collection, Prepocessing & Modelling Code
 
 [Drive Repository] (https://drive.google.com/drive/u/0/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R)
+[Dataset Repository] (https://drive.google.com/drive/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R?usp=drive_link)
 
 ### Initial filtration
 
