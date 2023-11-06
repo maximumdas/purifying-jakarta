@@ -371,7 +371,7 @@ async function getMap() {
     });
     layer.on("mouseout", function () {
       this.setStyle({
-        fillColor: "#009EFF",
+        fillColor: getColorGrade(feature.properties.aqi),
         weight: 2,
         opacity: 1,
 
