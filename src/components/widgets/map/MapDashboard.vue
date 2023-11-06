@@ -108,7 +108,150 @@
         <!--begin::Tab pane-->
         <div class="tab-pane fade" id="kt_lists_widget_3_tab_pane_3">
           <!--begin::Items-->
-
+          <div class="row g-5">
+            <div class="py-5 col-lg-8">
+              <div class="card card-stretch shadow">
+                <div class="card-header">
+                  <h3 class="card-title">Current AQI</h3>
+                  <div class="card-toolbar">
+                    <!-- <button type="button" class="btn btn-sm btn-light">
+                      Action
+                    </button> -->
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row d-flex justify-content-center mb-4">
+                    <div class="card shadow w-300px text-center">
+                      <div class="card-header">
+                        <div class="card-title text-center">AQI</div>
+                      </div>
+                      <div class="card-body">
+                        <h2 class="fs-30">
+                          {{ currentAqi }}
+                        </h2>
+                      </div>
+                      <div class="card-footer">
+                        <div class="row">Time : {{ currentDateAqi }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-center mb-4">
+                    <div class="container mb-4">
+                      <h3>Indicators:</h3>
+                    </div>
+                    <div class="container mb-2">
+                      <div v-if="currentIaqi != null" class="row">
+                        <div
+                          class="col mb-4"
+                          v-for="(data, idx) in currentIaqi"
+                          :key="idx"
+                        >
+                          <div class="card shadow">
+                            <div class="card-header">
+                              <div class="card-title">{{ idx }}</div>
+                            </div>
+                            <div class="card-body">{{ data.v }}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div v-if="currentAqiAttr != null" class="row text-muted">
+                    Source : {{ currentAqiAttr[0].name }}
+                  </div>
+                  <div v-if="currentAqiAttr != null" class="row text-muted">
+                    API : {{ currentAqiAttr[1].name }} ({{
+                      currentAqiAttr[1].url
+                    }})
+                  </div>
+                  <div v-if="currentAqiCity != null" class="row text-muted">
+                    Location : {{ currentAqiCity.name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="py-5 col-lg-4">
+              <div class="card shadow card-stretch">
+                <div class="card-header">
+                  <h3 class="card-title">Forcast AQI</h3>
+                  <div class="card-toolbar">
+                    <!-- <button type="button" class="btn btn-sm btn-light">
+                      Action
+                    </button> -->
+                  </div>
+                </div>
+                <div class="card-body card-scroll h-400px">
+                  <!--begin::Accordion-->
+                  <div
+                    class="accordion"
+                    id="kt_accordion_1"
+                    v-if="forecastDaily != null"
+                  >
+                    <div
+                      class="accordion-item mb-4"
+                      v-for="(data, idx) in forecastDaily"
+                      :key="idx"
+                    >
+                      <h2
+                        class="accordion-header"
+                        :id="'kt_accordion_header_' + idx"
+                      >
+                        <button
+                          class="accordion-button fs-4 fw-bold"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          :data-bs-target="'#kt_accordion_body_' + idx"
+                          aria-expanded="true"
+                          aria-controls="kt_accordion_1_body_1"
+                        >
+                          Indicator: {{ idx }}
+                        </button>
+                      </h2>
+                      <div
+                        :id="'kt_accordion_body_' + idx"
+                        class="accordion-collapse collapse show"
+                        aria-labelledby="kt_accordion_header_{{ idx }}"
+                        data-bs-parent="#kt_accordion_1"
+                      >
+                        <div class="accordion-body">
+                          <table class="table table-striped gy-7 gs-7">
+                            <thead>
+                              <tr>
+                                <td>Date</td>
+                                <td>AVG Value</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(row, idx) in data" :key="idx">
+                                <td>{{ row.day }}</td>
+                                <td>{{ row.avg }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--end::Accordion-->
+                </div>
+                <div class="card-footer">
+                  <div v-if="currentAqiAttr != null" class="row text-muted">
+                    Source : {{ currentAqiAttr[0].name }}
+                  </div>
+                  <div v-if="currentAqiAttr != null" class="row text-muted">
+                    API : {{ currentAqiAttr[1].name }} ({{
+                      currentAqiAttr[1].url
+                    }})
+                  </div>
+                  <div v-if="currentAqiCity != null" class="row text-muted">
+                    Location : {{ currentAqiCity.name }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!--end::Items-->
         </div>
         <!--end::Tab pane-->
@@ -137,6 +280,12 @@ const listIdStstions = [
 // 324734959ff84b4ae4efe58448de608b743cc98b token
 
 const openAqApi = inject("openAqApi");
+const currentAqi = ref(null);
+const currentDateAqi = ref(null);
+const currentAqiAttr = ref(null);
+const currentIaqi = ref(null);
+const currentAqiCity = ref(null);
+const forecastDaily = ref(null);
 
 async function getMap() {
   var map = leaflet.map("map");
@@ -259,19 +408,71 @@ async function getMap() {
   map.fitBounds(multipolygon.getBounds());
 }
 
-function makeChart() {
+async function makeChart() {
+  function pm25_aqi(pm25) {
+    const c = Math.floor(10 * pm25) / 10;
+    const a =
+      c < 0
+        ? 0 // values below 0 are considered beyond AQI
+        : c < 12.1
+        ? lerp(0, 50, 0.0, 12.0, c)
+        : c < 35.5
+        ? lerp(51, 100, 12.1, 35.4, c)
+        : c < 55.5
+        ? lerp(101, 150, 35.5, 55.4, c)
+        : c < 150.5
+        ? lerp(151, 200, 55.5, 150.4, c)
+        : c < 250.5
+        ? lerp(201, 300, 150.5, 250.4, c)
+        : c < 350.5
+        ? lerp(301, 400, 250.5, 350.4, c)
+        : c < 500.5
+        ? lerp(401, 500, 350.5, 500.4, c)
+        : 500; // values above 500 are considered beyond AQI
+    return Math.round(a);
+  }
+  function lerp(a, b, x0, x1, x) {
+    return a + ((b - a) * (x - x0)) / (x1 - x0);
+  }
+
+  // 'https://api.openaq.org/v2/averages?temporal=day&parameters_id=2&date_to=2023-11-01T00%3A00%3A00Z&date_from=2023-09-01T00%3A00%3A00Z&locations_id=299575&limit=100&page=1'
+
+  var dateTrend = [];
+  var aqiVal = [];
+  var pm25Val = [];
+
+  await axios
+    .get(
+      "https://api.openaq.org/v2/averages?temporal=day&parameters_id=2&date_to=2023-11-01T00%3A00%3A00Z&date_from=2023-09-01T00%3A00%3A00Z&locations_id=299575&limit=100&page=1",
+      {
+        headers: {
+          accept: "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log("trend", response.data.results);
+      var trendData = response.data.results;
+      trendData.forEach((element) => {
+        dateTrend.push(element.day);
+        pm25Val.push(element.average);
+        var aqi = pm25_aqi(element.average);
+        aqiVal.push(aqi);
+      });
+    });
+
   var options = {
     chart: {
       type: "line",
     },
     series: [
       {
-        name: "sales",
-        data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+        name: "AQI",
+        data: aqiVal,
       },
     ],
     xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+      categories: dateTrend,
     },
   };
 
@@ -280,8 +481,26 @@ function makeChart() {
   chart.render();
 }
 
+async function getCurrentAqi() {
+  await axios
+    .get(
+      "https://api.waqi.info/feed/Jakarta/?token=324734959ff84b4ae4efe58448de608b743cc98b"
+    )
+    .then((response) => {
+      console.log("current aqi", response.data.data);
+      var dataAqi = response.data.data;
+      currentAqi.value = dataAqi.aqi;
+      currentDateAqi.value = dataAqi.time.s;
+      currentAqiAttr.value = dataAqi.attributions;
+      currentIaqi.value = dataAqi.iaqi;
+      currentAqiCity.value = dataAqi.city;
+      forecastDaily.value = dataAqi.forecast.daily;
+    });
+}
+
 onMounted(() => {
   getMap();
   makeChart();
+  getCurrentAqi();
 });
 </script>
