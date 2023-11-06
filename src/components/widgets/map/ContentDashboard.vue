@@ -138,7 +138,7 @@
       </div>
       <div class="mb-16">
         <div class="text-center mb-12">
-          <h3 class="fs-2hx text-dark mb-5">How to Purify Jakarta??</h3>
+          <h3 class="fs-2hx text-dark mb-5">How to Purifying Jakarta??</h3>
         </div>
       </div>
     </div>
