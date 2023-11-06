@@ -358,6 +358,13 @@ async function getMap() {
             [${feature.properties.kdkab}] ${feature.properties.nmkab}
             </td>
         </tr>
+        <tr>
+          <td>Interpolated AQI</td>
+          <td>:</td>
+          <td>
+            ${feature.properties.aqi}
+            </td>
+        </tr>
         </table>`);
     layer.on("click", zoomToFeature);
     layer.on("mouseover", function () {

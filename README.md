@@ -12,7 +12,7 @@
 
 ## Presentation Video
 
-[![Yolo Persentation Video](https://drive.google.com/drive/u/0/folders/1efjIY4QnLvmLHzdwRF8pueVesHhDwdRm)
+[Persentation Video](https://drive.google.com/drive/u/0/folders/1efjIY4QnLvmLHzdwRF8pueVesHhDwdRm)
 
 ## Background
 
@@ -32,24 +32,6 @@ An air quality index (AQI) is an indicator developed by government agencies to c
 - [Drive Repository](https://drive.google.com/drive/u/0/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R)
 - [Dataset Repository](https://drive.google.com/drive/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R?usp=drive_link)
 
-### Initial filtration
+## Our Platform
 
-## Use case
-
-## About the repository
-
-### Repo structure
-
-## Limitation
-
-## Roadmap
-
-## Appendix
-
-Code Repository
-
-S3 Bucket Trajectory Result Repository
-
-Platform
-
-Presentation
+[Purifying Jakarta - Vercel App](https://purifying-jakarta.vercel.app/)
