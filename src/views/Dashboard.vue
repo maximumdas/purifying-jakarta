@@ -6,15 +6,13 @@
       <!-- <Map widget-classes="mb-5 mb-xl-8"></Map> -->
       <MapDashboard></MapDashboard>
     </div>
-    <!--end:::Col-->
-
+  </div>
+  <div class="row g-xl-8">
     <!--begin:::Col-->
-
-    <!--end:::Col-->
-
-    <!--begin:::Col-->
-
-    <!--end:::Col-->
+    <div class="col-12">
+      <!-- <Map widget-classes="mb-5 mb-xl-8"></Map> -->
+      <ContentDashboard></ContentDashboard>
+    </div>
   </div>
   <!--end::Row-->
 </template>
@@ -31,6 +29,7 @@ import KTListWidget2 from "@/components/widgets/lists/Widget2.vue";
 // import KTListWidget3 from "@/components/widgets/lists/Widget3.vue";
 import Map from "@/components/widgets/map/Map.vue";
 import MapDashboard from "@/components/widgets/map/MapDashboard.vue";
+import ContentDashboard from "@/components/widgets/map/ContentDashboard.vue";
 
 import KTListWidget4 from "@/components/widgets/lists/Widget4.vue";
 import KTSliderWidget1 from "@/components/widgets/sliders/Widget1.vue";

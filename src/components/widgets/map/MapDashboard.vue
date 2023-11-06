@@ -1,6 +1,6 @@
 <template>
   <!--begin::List Widget 3-->
-  <div :class="widgetClasses" class="card card-flush">
+  <div :class="widgetClasses" class="card card-flush mb-4">
     <!--begin::Card header-->
     <div class="card-header">
       <!--begin::Card title-->
