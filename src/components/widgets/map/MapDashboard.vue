@@ -101,7 +101,7 @@
         <div class="tab-pane fade" id="kt_lists_widget_3_tab_pane_2">
           <!--begin::Chart-->
           <div class="row mb-4">
-            <div class="col">Source :</div>
+            <div class="col">Source : openaq-api</div>
           </div>
           <div id="chart-trend"></div>
           <!--end::Chart-->
@@ -472,6 +472,11 @@ async function makeChart() {
   var options = {
     chart: {
       type: "line",
+      zoom: {
+        type: "x",
+        enabled: true,
+        autoScaleYaxis: true,
+      },
     },
     series: [
       {
@@ -484,6 +489,7 @@ async function makeChart() {
       },
     ],
     xaxis: {
+      type: "datetime",
       categories: dateTrend,
     },
   };
