@@ -4,15 +4,15 @@
 
 ## Yolo-Serta Mulia 25th Team Members
 
-- [Aldo Leofiro Irfiansyah](https://www.linkedin.com/in/adityasetyadi/) _BPS - Statistics Indonesia_
-- [Ari Rismansyah]() _BPS - Statistics Indonesia_
-- [Muarrikh Yazka G.P.]() _BPS - Statistics Indonesia_
-- [Nashir Wahyudi]() _BPS - Statistics Indonesia_
-- [Novia Permatasari]() _BPS - Statistics Indonesia_
+- [Aldo Leofiro Irfiansyah](https://www.linkedin.com/in/leofiro/) _BPS - Statistics Indonesia_
+- [Ari Rismansyah](https://www.linkedin.com/in/arirismansyah/) _BPS - Statistics Indonesia_
+- [Muarrikh Yazka G.P.](https://www.linkedin.com/in/muarrikhyazka/) _BPS - Statistics Indonesia_
+- [Nashir Wahyudi](https://www.linkedin.com/in/nashir-geeks-wahyudi/) _BPS - Statistics Indonesia_
+- [Novia Permatasari](https://www.linkedin.com/in/noviaprmtsr/) _BPS - Statistics Indonesia_
 
 ## Presentation Video
 
-[![Yolo Persentation Video](https://example.com)
+[![Yolo Persentation Video](https://drive.google.com/drive/u/0/folders/1efjIY4QnLvmLHzdwRF8pueVesHhDwdRm)
 
 ## Background
 
@@ -27,7 +27,10 @@
 
 An air quality index (AQI) is an indicator developed by government agencies to communicate to the public how polluted the air currently is or how polluted it is forecast to become. As air pollution levels rise, so does the AQI, along with the associated public health risk.
 
-## Big Data processing
+## Data Collection, Prepocessing & Modelling Code
+
+[Drive Repository](https://drive.google.com/drive/u/0/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R)
+[Dataset Repository](https://drive.google.com/drive/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R?usp=drive_link)
 
 ### Initial filtration
 
