@@ -55,7 +55,7 @@
                 name="Mapbox"
                 attribution="© <a href='https://www.mapbox.com/contribute/'>Mapbox</a>"
               ></l-tile-layer>
-              <l-geo-json
+              <!-- <l-geo-json
                 v-if="show"
                 :key="geoid"
                 :geojson="polygonData"
@@ -64,9 +64,8 @@
                   onEachFeature: onEachHexFeature,
                 }"
               >
-              </l-geo-json>
+              </l-geo-json> -->
               <l-geo-json
-                v-else
                 :geojson="newpolygonData"
                 :optionsStyle="style"
                 :options="{
