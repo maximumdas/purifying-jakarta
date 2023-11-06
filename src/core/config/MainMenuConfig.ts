@@ -15,10 +15,10 @@ const DocMenuConfig = [
             heading: "Simulation",
             route: "/pages/simulation",
           },
-          {
-            heading: "Dataset",
-            route: "/pages/invoice",
-          },
+          // {
+          //   heading: "Dataset",
+          //   route: "/pages/invoice",
+          // },
         ],
       },
     ],
