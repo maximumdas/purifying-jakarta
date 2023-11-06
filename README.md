@@ -13,6 +13,7 @@
 ## Presentation Video
 
 [Persentation Video](https://drive.google.com/drive/u/0/folders/1efjIY4QnLvmLHzdwRF8pueVesHhDwdRm)
+[Persentation Materials](https://docs.google.com/presentation/d/1AHu5NPUqEM9HwhmUnIH3XerPhGcCVYr0SxTHdvuGfVw/edit?usp=sharing)
 
 ## Background
 
