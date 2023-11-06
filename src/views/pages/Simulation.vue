@@ -33,7 +33,8 @@
         </div>
       </div>
     </div>
-    <div style="height: 75vh; width: 100%" class="rounded col-12">
+    <MapSimulation />
+    <!-- <div style="height: 75vh; width: 100%" class="rounded col-12">
       <l-map ref="map" v-model:zoom="zoom" :center="[-6.3810549, 106.8661672]">
         <l-tile-layer
           url="https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWF4aW11bWRhcyIsImEiOiJjbGE3ejA0cmcwNDhtM3BteTZ1ZDR1NW1pIn0.X360ooFjxu2JyzZVjohMgg"
@@ -42,7 +43,7 @@
           attribution="© <a href='https://www.mapbox.com/contribute/'>Mapbox</a>"
         ></l-tile-layer>
       </l-map>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -52,13 +53,15 @@ import { defineComponent, onMounted, ref } from "vue";
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 import Multiselect from "@vueform/multiselect";
+import MapSimulation from "@/components/widgets/map/MapSimulation.vue";
 
 export default defineComponent({
   name: "simulation",
   components: {
-    LMap,
-    LTileLayer,
+    // LMap,
+    // LTileLayer,
     Multiselect,
+    MapSimulation,
   },
   setup() {
     const zoom = ref(9);
