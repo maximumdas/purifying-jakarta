@@ -65,7 +65,7 @@
           :show="show"
         />
       </div>
-      <div class="col-6">
+      <!-- <div class="col-6">
         <MapSimulation
           :polygonData="targetPolygonData"
           :newpolygonData="aftertargetPolygonData"
@@ -73,7 +73,7 @@
           :geoid="aftgeoid"
           :show="show"
         />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

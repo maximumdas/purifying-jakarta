@@ -271,7 +271,7 @@ import axios from "axios";
 import "leaflet/dist/leaflet.css";
 import { ref, inject, computed, onMounted } from "vue";
 import leaflet from "leaflet";
-import hexPolygon from "@/assets/map/hex_res7_with_attr.js";
+import hexPolygon from "@/assets/map/hex_before_attribute";
 import { array } from "yup";
 import ApexCharts from "apexcharts";
 
@@ -301,9 +301,25 @@ async function getMap() {
     })
     .addTo(map);
 
+  const getColorGrade = (value) => {
+    let color = "#7E0122";
+    if (value <= 50) {
+      color = "#04E300";
+    } else if (value <= 100) {
+      color = "#FFFF00";
+    } else if (value <= 150) {
+      color = "#FF7E00";
+    } else if (value <= 200) {
+      color = "#FF0000";
+    } else if (value <= 300) {
+      color = "#8F3F97";
+    }
+
+    return color;
+  };
   function style(feature) {
     return {
-      fillColor: "#009EFF",
+      fillColor: getColorGrade(feature.properties.aqi),
       weight: 1,
       opacity: 1,
       color: "white",
