@@ -455,7 +455,7 @@ async function makeChart() {
       var trendData = response.data.results;
       trendData.forEach((element) => {
         dateTrend.push(element.day);
-        pm25Val.push(element.average);
+        pm25Val.push(element.average.toFixed(2));
         var aqi = pm25_aqi(element.average);
         aqiVal.push(aqi);
       });
@@ -469,6 +469,10 @@ async function makeChart() {
       {
         name: "AQI",
         data: aqiVal,
+      },
+      {
+        name: "PM 2.5",
+        data: pm25Val,
       },
     ],
     xaxis: {
