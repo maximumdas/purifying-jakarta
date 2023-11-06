@@ -23,7 +23,7 @@
               <inline-svg src="media/icons/duotune/general/gen023.svg" />
             </span>
           </a>
-          <DropdownSimulation :onSelectChange="changeSelected(val)" />
+          <DropdownSimulation :onSelectChange="changeSelected" />
         </div>
       </div>
       <!--end::Card toolbar-->
@@ -56,7 +56,18 @@
                 attribution="© <a href='https://www.mapbox.com/contribute/'>Mapbox</a>"
               ></l-tile-layer>
               <l-geo-json
+                v-if="show"
+                :key="geoid"
                 :geojson="polygonData"
+                :optionsStyle="style"
+                :options="{
+                  onEachFeature: onEachHexFeature,
+                }"
+              >
+              </l-geo-json>
+              <l-geo-json
+                v-else
+                :geojson="newpolygonData"
                 :optionsStyle="style"
                 :options="{
                   onEachFeature: onEachHexFeature,
@@ -77,7 +88,7 @@
 
 <script lang="ts">
 import "leaflet/dist/leaflet.css";
-import { defineComponent, onMounted, ref, toRefs } from "vue";
+import { defineComponent, onMounted, ref, toRefs, watch } from "vue";
 import { getCSSVariableValue } from "@/assets/ts/_utils";
 import DropdownSimulation from "@/components/dropdown/DropdownSimulation.vue";
 import { LMap, LTileLayer, LGeoJson } from "@vue-leaflet/vue-leaflet";
@@ -87,7 +98,10 @@ export default defineComponent({
   props: {
     widgetClasses: String,
     polygonData: Object,
+    newpolygonData: Object,
     title: String,
+    geoid: Number,
+    show: Boolean,
   },
   components: {
     DropdownSimulation,
@@ -197,6 +211,13 @@ export default defineComponent({
         data: [-30, -40, -55, -60, -40, -20],
       },
     ];
+
+    watch(
+      () => props.polygonData,
+      () => {
+        console.log(props.polygonData);
+      }
+    );
     return {
       series,
       zoom,

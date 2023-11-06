@@ -28,6 +28,7 @@
             class="form-select-solid d-block"
             placeholder="Select option"
             v-model="data.status"
+            @change="changeSelection"
           >
             <el-option label="Average built-up area" value="built_up_mean"
               >Average built-up area</el-option
@@ -108,7 +109,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 
 interface Filter {
   status: string;
@@ -119,17 +120,26 @@ interface Filter {
 
 export default defineComponent({
   name: "dropdown-1",
+  props: {},
   components: {},
-  setup() {
-    const data = ref<Filter>({
+  methods: {},
+  setup(props, context) {
+    const data = ref({
       status: "",
       author: true,
       customer: true,
       notifications: true,
     });
 
+    const changeSelection = () => {
+      console.log("value: ", data.value.status);
+      context.emit("onChanges", data.value.status);
+    };
+    const selectedVar = ref("");
+
     return {
       data,
+      changeSelection,
     };
   },
 });

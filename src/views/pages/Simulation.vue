@@ -29,12 +29,6 @@
                     >Jakarta Selatan</el-option
                   >
                 </el-select>
-                <!-- <multiselect
-                  v-model="xSelected"
-                  :options="xOptions"
-                  mode="tags"
-                  placeholder="Select dependent variabel"
-                /> -->
               </div>
             </div>
             <div class="col-6">
@@ -45,6 +39,7 @@
                   ref="inputRef"
                   type="number"
                   name="aqi_pref"
+                  v-model="aqiPrefValue"
                   id="aqi_pref"
                   placeholder="Input pefered AQI"
                 />
@@ -52,7 +47,9 @@
             </div>
             <div class="col-12 text-end">
               <el-button class="mt-5" type="warning">Reset</el-button>
-              <el-button class="mt-5" type="primary">Simulate</el-button>
+              <el-button class="mt-5" type="primary" @click="openFullScreen2"
+                >Simulate</el-button
+              >
             </div>
           </div>
         </div>
@@ -60,12 +57,21 @@
     </div>
     <div class="row">
       <div class="col-6">
-        <MapSimulation :polygonData="polygonData" title="Current Situation" />
+        <MapSimulation
+          :polygonData="polygonData"
+          :newpolygonData="beforepolygonData"
+          title="Current Situation"
+          :geoid="geoid"
+          :show="show"
+        />
       </div>
       <div class="col-6">
         <MapSimulation
           :polygonData="targetPolygonData"
+          :newpolygonData="aftertargetPolygonData"
           title="Changes Effect"
+          :geoid="aftgeoid"
+          :show="show"
         />
       </div>
     </div>
@@ -76,27 +82,89 @@
 import "leaflet/dist/leaflet.css";
 import { defineComponent, onMounted, ref } from "vue";
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
-import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
-import Multiselect from "@vueform/multiselect";
 import MapSimulation from "@/components/widgets/map/MapSimulation.vue";
 import hexPolygon from "@/assets/map/hex_before_attribute.js";
+import mapafter from "@/assets/map/simulation/3173_after.js";
+import mapbefore from "@/assets/map/simulation/3173_before.js";
+import { ElLoading } from "element-plus";
 
 export default defineComponent({
   name: "simulation",
   components: {
-    // LMap,
-    // LTileLayer,
-    // Multiselect,
     MapSimulation,
   },
-  setup() {
+  setup(props, context) {
     const zoom = ref(9);
-    const xSelected = ref(null);
+    const xSelected = ref("");
+    const aqiPrefValue = ref("");
     const polygonData = ref(hexPolygon);
-    const targetPolygonData = ref(null);
+    const targetPolygonData = ref({});
+    const beforepolygonData = ref({});
+    const aftertargetPolygonData = ref({});
     const xOptions = ref();
+    const geoid = ref(1);
+    const aftgeoid = ref(2);
+    const show = ref(true);
+
+    const simulation = () => {
+      console.log(xSelected.value, aqiPrefValue.value);
+    };
+    type MyType = {
+      type: string;
+      crs: any;
+      features: any[];
+    };
+
+    const openFullScreen2 = () => {
+      const loading = ElLoading.service({
+        lock: true,
+        text: "Loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      setTimeout(() => {
+        show.value = false;
+        loading.close();
+      }, 2000);
+    };
+
     onMounted(() => {
       setCurrentPageBreadcrumbs("Simulation", ["Pages", "Simulation"]);
+      const hexafter: MyType = {
+        type: "FeatureCollection",
+        crs: {
+          type: "name",
+          properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" },
+        },
+        features: [],
+      };
+
+      hexPolygon.features.forEach((feat) => {
+        mapafter.forEach((after) => {
+          if (feat.properties.hex_id == after.hex_id) {
+            hexafter.features.push(feat);
+          }
+        });
+      });
+      aftertargetPolygonData.value = hexafter;
+
+      const hexbefore: MyType = {
+        type: "FeatureCollection",
+        crs: {
+          type: "name",
+          properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" },
+        },
+        features: [],
+      };
+
+      hexPolygon.features.forEach((feat) => {
+        mapbefore.forEach((before) => {
+          if (feat.properties.hex_id == before.hex_id) {
+            hexbefore.features.push(feat);
+          }
+        });
+      });
+
+      beforepolygonData.value = hexbefore;
     });
 
     return {
@@ -105,6 +173,14 @@ export default defineComponent({
       xSelected,
       polygonData,
       targetPolygonData,
+      aqiPrefValue,
+      simulation,
+      openFullScreen2,
+      geoid,
+      aftgeoid,
+      show,
+      beforepolygonData,
+      aftertargetPolygonData,
     };
   },
 });
