@@ -100,6 +100,9 @@
         <!--begin::Tab pane-->
         <div class="tab-pane fade" id="kt_lists_widget_3_tab_pane_2">
           <!--begin::Chart-->
+          <div class="row mb-4">
+            <div class="col">Source :</div>
+          </div>
           <div id="chart-trend"></div>
           <!--end::Chart-->
         </div>
@@ -443,7 +446,7 @@ async function makeChart() {
 
   await axios
     .get(
-      "https://api.openaq.org/v2/averages?temporal=day&parameters_id=2&date_to=2023-11-01T00%3A00%3A00Z&date_from=2023-09-01T00%3A00%3A00Z&locations_id=299575&limit=100&page=1",
+      "https://api.openaq.org/v2/averages?temporal=day&parameters_id=2&date_to=2023-11-01T00%3A00%3A00Z&date_from=2023-08-01T00%3A00%3A00Z&locations_id=299575&limit=100&page=1",
       {
         headers: {
           accept: "application/json",
@@ -452,7 +455,12 @@ async function makeChart() {
     )
     .then((response) => {
       console.log("trend", response.data.results);
-      var trendData = response.data.results;
+      var trendData = response.data.results.sort(function (a, b) {
+        var c = new Date(a.day);
+        var d = new Date(b.day);
+        return c - d;
+      });
+
       trendData.forEach((element) => {
         dateTrend.push(element.day);
         pm25Val.push(element.average.toFixed(2));
