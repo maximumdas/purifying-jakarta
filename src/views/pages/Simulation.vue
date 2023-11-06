@@ -141,7 +141,25 @@ export default defineComponent({
       hexPolygon.features.forEach((feat) => {
         mapafter.forEach((after) => {
           if (feat.properties.hex_id == after.hex_id) {
-            hexafter.features.push(feat);
+            hexafter.features.push({
+              ...feat,
+              built_up_mean: after.built_up_mean,
+              pop_mean: after.pop_mean,
+              LST_mean: after.LST_mean,
+              NDBI_mean: after.NDBI_mean,
+              NDVI_mean: after.NDVI_mean,
+              NDWI_mean: after.NDWI_mean,
+              NTL_mean: after.NTL_mean,
+              land_cover_Built_up: after.land_cover_Built_up,
+              land_cover_Crop_land: after.land_cover_Crop_land,
+              land_cover_Grassland: after.land_cover_Grassland,
+              land_cover_Herbaceous_wetland:
+                after.land_cover_Herbaceous_wetland,
+              land_cover_Permanent_Water_Bodies:
+                after.land_cover_Permanent_Water_Bodies,
+              land_cover_Tree_Cover: after.land_cover_Tree_Cover,
+              aqi: after.aqi,
+            });
           }
         });
       });
@@ -159,7 +177,25 @@ export default defineComponent({
       hexPolygon.features.forEach((feat) => {
         mapbefore.forEach((before) => {
           if (feat.properties.hex_id == before.hex_id) {
-            hexbefore.features.push(feat);
+            hexbefore.features.push({
+              ...feat,
+              built_up_mean: before.built_up_mean,
+              pop_mean: before.pop_mean,
+              LST_mean: before.LST_mean,
+              NDBI_mean: before.NDBI_mean,
+              NDVI_mean: before.NDVI_mean,
+              NDWI_mean: before.NDWI_mean,
+              NTL_mean: before.NTL_mean,
+              land_cover_Built_up: before.land_cover_Built_up,
+              land_cover_Crop_land: before.land_cover_Crop_land,
+              land_cover_Grassland: before.land_cover_Grassland,
+              land_cover_Herbaceous_wetland:
+                before.land_cover_Herbaceous_wetland,
+              land_cover_Permanent_Water_Bodies:
+                before.land_cover_Permanent_Water_Bodies,
+              land_cover_Tree_Cover: before.land_cover_Tree_Cover,
+              aqi: before.aqi,
+            });
           }
         });
       });
