@@ -23,14 +23,14 @@
 
 ## Data
 
-### [Air Quality Index Data](https://website-name.com)
+### [Air Quality Index Data]
 
 An air quality index (AQI) is an indicator developed by government agencies to communicate to the public how polluted the air currently is or how polluted it is forecast to become. As air pollution levels rise, so does the AQI, along with the associated public health risk.
 
 ## Data Collection, Prepocessing & Modelling Code
 
-[Drive Repository](https://drive.google.com/drive/u/0/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R)
-[Dataset Repository](https://drive.google.com/drive/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R?usp=drive_link)
+- [Drive Repository](https://drive.google.com/drive/u/0/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R)
+- [Dataset Repository](https://drive.google.com/drive/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R?usp=drive_link)
 
 ### Initial filtration
 
