@@ -27,6 +27,11 @@
 
 An air quality index (AQI) is an indicator developed by government agencies to communicate to the public how polluted the air currently is or how polluted it is forecast to become. As air pollution levels rise, so does the AQI, along with the associated public health risk.
 
+API we used to collect AQI data
+
+- [For Series AQI Data - Open AQ](https://openaq.org/)
+- [For Live AQI Data](https://waqi.info/)
+
 ## Data Collection, Prepocessing & Modelling Code
 
 - [Drive Repository](https://drive.google.com/drive/u/0/folders/1TkbMRaGmVY2B8NtK6JLJ50hKVhaqvM4R)
